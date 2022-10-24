@@ -4,7 +4,7 @@ project:
 packages:
   - name: "db"
     path: "./db/sqlc"
-    queries: "./db/query/queries.sql"
+    queries: ["./db/query/accounts.sql", "./db/query/entries.sql", "./db/query/transfers.sql"]
     schema: "./db/migration"
     engine: "postgresql"
     emit_json_tags: true
