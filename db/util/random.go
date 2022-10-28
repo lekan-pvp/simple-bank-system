@@ -13,8 +13,8 @@ func init() {
 }
 
 // RandomInt generates a random integer between min and max
-func RandomInt(min, max int64)int64 {
-	return min + rand.Int63n(max - min + 1)
+func RandomInt(min, max int64) int64 {
+	return min + rand.Int63n(max-min+1)
 }
 
 // RandomString generates a random stringof length n
