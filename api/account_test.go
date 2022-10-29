@@ -5,7 +5,8 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
+
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -79,7 +80,6 @@ func TestGetAccountAPI(t *testing.T) {
 				require.Equal(t, http.StatusBadRequest, recorder.Code)
 			},
 		},
-		// TODO: add more cases
 	}
 
 	for i := range testCases {
@@ -103,12 +103,11 @@ func TestGetAccountAPI(t *testing.T) {
 			tc.checkResponse(t, recorder)
 		})
 	}
-
 }
 
 func randomAccount() db.Account {
 	return db.Account{
-		ID:       util.RandomInt(1, 1000),
+		ID:       util.RandomInt(1, 2000),
 		Owner:    util.RandomOwner(),
 		Balance:  float64(util.RandomMoney()),
 		Currency: util.RandomCorrency(),
@@ -116,7 +115,7 @@ func randomAccount() db.Account {
 }
 
 func requireBodyMatchAccount(t *testing.T, body *bytes.Buffer, account db.Account) {
-	data, err := ioutil.ReadAll(body)
+	data, err := io.ReadAll(body)
 	require.NoError(t, err)
 
 	var gotAccount db.Account
