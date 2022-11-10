@@ -22,7 +22,7 @@ func (server *Server) createAccount(ctx *gin.Context) {
 		return
 	}
 
-	authPayload := ctx.MustGet(authorizationHeaderKey).(*token.PayLoad)
+	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.PayLoad)
 	arg := db.CreateAccountParams{
 		Owner:    authPayload.Username,
 		Currency: req.Currency,
@@ -65,7 +65,7 @@ func (server *Server) getAccount(ctx *gin.Context) {
 		return
 	}
 
-	authPayload := ctx.MustGet(authorizationHeaderKey).(*token.PayLoad)
+	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.PayLoad)
 	if account.Owner != authPayload.Username {
 		err := errors.New("account doesn't belong to the authenticated user")
 		ctx.JSON(http.StatusUnauthorized, errorResponse(err))
@@ -87,7 +87,7 @@ func (server *Server) listAccount(ctx *gin.Context) {
 		return
 	}
 
-	authPayload := ctx.MustGet(authorizationHeaderKey).(*token.PayLoad)
+	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.PayLoad)
 	arg := db.ListAccountsParams{
 		Owner:  authPayload.Username,
 		Limit:  req.PageSize,
